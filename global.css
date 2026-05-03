@@ -1,4 +1,22 @@
-@import "tailwindcss";
-@source "./app/**/*.{js,jsx,ts,tsx}";
-@source "./components/**/*.{js,jsx,ts,tsx}";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
 @import "nativewind/theme";
+
+@theme {
+  --color-magnolia: #faf8ff;
+  --color-cinder: #11131b;
+  --color-athens-gray: #e1e1ed;
+  --color-gray-suit: #c8c4d6;
+  --color-gun-powder: #464555;
+  --color-ebony: #131b2e;
+  --color-shark: #191b23;
+  --color-melrose: #c5c0ff;
+  --color-shark2: #1d1728;
+  --color-persian-blue: #3525cd;
+  --color-royal-blue: #584de0;
+  --color-shark3: #282a32;
+  --color-hawkes-blue: #dae2fd;
+  --color-titan-white: #e2e7ff;
+}
