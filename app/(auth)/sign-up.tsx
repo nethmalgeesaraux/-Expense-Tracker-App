@@ -3,11 +3,18 @@ import { useColorScheme } from "nativewind";
 import { Image, Text, View } from "react-native";
 import { Pressable } from "react-native";
 import useSocialAuth from "@/hooks/useSocialAuth";
+import { OAUTH } from "@/constants";
+
 
 const SignInScreen = () => {
   const { colorScheme } = useColorScheme();
   const isDarkMode = colorScheme === "dark";
   const { handleSocialAuth, loadingStrategy } = useSocialAuth();
+
+  const isGoogleClicked = loadingStrategy === OAUTH.GOOGLE_OAUTH;
+  const isGithubClicked = loadingStrategy === OAUTH.OAUTH_GITHUB;
+  const isAppleClicked = loadingStrategy === OAUTH.OAUTH_APPLE;
+
 
 
   return (
@@ -15,8 +22,8 @@ const SignInScreen = () => {
       <View className="w-full items-center">
         <View
           className={`w-full max-w-[360px] items-center rounded-[32px] px-6 pb-16 pt-10 ${isDarkMode
-              ? "border border-[#1f2433] bg-[#0d111c]"
-              : "border border-[#ece8fb] bg-[#f7f5ff]"
+            ? "border border-[#1f2433] bg-[#0d111c]"
+            : "border border-[#ece8fb] bg-[#f7f5ff]"
             }`}
         >
           <Text
@@ -40,8 +47,8 @@ const SignInScreen = () => {
 
         <View
           className={`mt-[-28px] w-full max-w-[330px] rounded-[24px] px-5 py-4 ${isDarkMode
-              ? "border border-[#2b3040] bg-[#1b1f2d]"
-              : "border border-[#ece8fb] bg-[#ffffff]"
+            ? "border border-[#2b3040] bg-[#1b1f2d]"
+            : "border border-[#ece8fb] bg-[#ffffff]"
             }`}
         >
           <View
