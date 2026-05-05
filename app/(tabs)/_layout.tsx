@@ -19,6 +19,7 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarActiveTintColor: "#1f2937",
       }}
+      initialRouteName="home"
     >
       <Tabs.Screen
         name="home"
@@ -29,6 +30,34 @@ export default function TabsLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="Add"
+        options={{
+          title: "Add",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="plus-circle" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="expense"
+        options={{
+          title: "Expense",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="wallet" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="user" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
+
