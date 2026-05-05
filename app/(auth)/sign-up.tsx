@@ -1,5 +1,6 @@
 import SafeAreaView from "@/components/SafeAreaView";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
 import useSocialAuth from "@/hooks/useSocialAuth";
@@ -7,7 +8,7 @@ import { OAUTH } from "@/constants";
 
 
 const SignInScreen = () => {
-  
+  const router = useRouter();
   const { colorScheme } = useColorScheme();
   const isDarkMode = colorScheme === "dark";
   const { handleSocialAuth, loadingStrategy } = useSocialAuth();
@@ -16,6 +17,13 @@ const SignInScreen = () => {
   const isGoogleClicked = loadingStrategy === OAUTH.GOOGLE_OAUTH;
   const isGithubClicked = loadingStrategy === OAUTH.OAUTH_GITHUB;
   const isAppleClicked = loadingStrategy === OAUTH.OAUTH_APPLE;
+
+  const signInWith = async (strategy: "oauth_google" | "oauth_github" | "oauth_apple") => {
+    const isSuccess = await handleSocialAuth(strategy);
+    if (isSuccess) {
+      router.replace("/(tabs)/home");
+    }
+  };
 
 
 
@@ -77,7 +85,7 @@ const SignInScreen = () => {
       <View className="mt-6">
         <View className="w-full max-w-[360px]">
           <Pressable
-            onPress={() => handleSocialAuth(OAUTH.GOOGLE_OAUTH)}
+            onPress={() => signInWith(OAUTH.GOOGLE_OAUTH)}
             disabled={isLoadingAny}
             className={`h-12 flex-row items-center rounded-[14px] border px-4 ${isDarkMode
               ? "border-[#323a4e] bg-[#121825]"
@@ -105,7 +113,7 @@ const SignInScreen = () => {
           </Pressable>
 
           <Pressable
-            onPress={() => handleSocialAuth(OAUTH.OAUTH_GITHUB)}
+            onPress={() => signInWith(OAUTH.OAUTH_GITHUB)}
             disabled={isLoadingAny}
             className={`mt-3 h-12 flex-row items-center rounded-[14px] border px-4 ${isDarkMode
               ? "border-[#323a4e] bg-[#121825]"
@@ -129,7 +137,7 @@ const SignInScreen = () => {
           </Pressable>
 
           <Pressable
-            onPress={() => handleSocialAuth(OAUTH.OAUTH_APPLE)}
+            onPress={() => signInWith(OAUTH.OAUTH_APPLE)}
             disabled={isLoadingAny}
             className="mt-3 h-12 flex-row items-center rounded-[14px] border border-[#d7ddea] bg-[#f7f9fc] px-4"
           >
