@@ -22,9 +22,13 @@ const useSocialAuth = () => {
         );
         return;
       }
+
+      await setActive({ session: createdSessionId });
     } catch (error) {
       console.log("Error in social auth", error);
       Alert.alert("Error Failed to sign in. Please try again.");
+    } finally {
+      setLoadingStrategy(null);
     }
   };
 
