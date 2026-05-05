@@ -1,15 +1,17 @@
 import SafeAreaView from "@/components/SafeAreaView";
+import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
-import { Image, Text, View } from "react-native";
-import { Pressable } from "react-native";
+import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
 import useSocialAuth from "@/hooks/useSocialAuth";
 import { OAUTH } from "@/constants";
 
 
 const SignInScreen = () => {
+  
   const { colorScheme } = useColorScheme();
   const isDarkMode = colorScheme === "dark";
   const { handleSocialAuth, loadingStrategy } = useSocialAuth();
+  const isLoadingAny = Boolean(loadingStrategy);
 
   const isGoogleClicked = loadingStrategy === OAUTH.GOOGLE_OAUTH;
   const isGithubClicked = loadingStrategy === OAUTH.OAUTH_GITHUB;
@@ -73,7 +75,81 @@ const SignInScreen = () => {
       </View>
 
       <View className="mt-6">
-        <Pressable className="" onPress={() => { }} />
+        <View className="w-full max-w-[360px]">
+          <Pressable
+            onPress={() => handleSocialAuth(OAUTH.GOOGLE_OAUTH)}
+            disabled={isLoadingAny}
+            className={`h-12 flex-row items-center rounded-[14px] border px-4 ${isDarkMode
+              ? "border-[#323a4e] bg-[#121825]"
+              : "border-[#dde1ea] bg-[#ffffff]"
+              } ${isLoadingAny ? "opacity-70" : "opacity-100"}`}
+          >
+            <View className="h-7 w-7 items-center justify-center rounded-full bg-white">
+              <Image
+                source={require("@/assets/images/google.png")}
+                className="h-4 w-4"
+                resizeMode="contain"
+              />
+            </View>
+            <Text
+              className={`ml-3 flex-1 text-[15px] font-semibold ${isDarkMode ? "text-[#f2f5ff]" : "text-[#1c2330]"
+                }`}
+            >
+              {isGoogleClicked ? "Connecting with Google..." : "Continue with Google"}
+            </Text>
+            {isGoogleClicked ? (
+              <ActivityIndicator size="small" color={isDarkMode ? "#e7ecfb" : "#1f2937"} />
+            ) : (
+              <Ionicons name="chevron-forward" size={16} color={isDarkMode ? "#9ea7bd" : "#64748b"} />
+            )}
+          </Pressable>
+
+          <Pressable
+            onPress={() => handleSocialAuth(OAUTH.OAUTH_GITHUB)}
+            disabled={isLoadingAny}
+            className={`mt-3 h-12 flex-row items-center rounded-[14px] border px-4 ${isDarkMode
+              ? "border-[#323a4e] bg-[#121825]"
+              : "border-[#dde1ea] bg-[#ffffff]"
+              } ${isLoadingAny ? "opacity-70" : "opacity-100"}`}
+          >
+            <View className="h-7 w-7 items-center justify-center rounded-full bg-white">
+              <FontAwesome5 name="github" size={15} color="#0f172a" />
+            </View>
+            <Text
+              className={`ml-3 flex-1 text-[15px] font-semibold ${isDarkMode ? "text-[#f2f5ff]" : "text-[#1c2330]"
+                }`}
+            >
+              {isGithubClicked ? "Connecting with GitHub..." : "Continue with GitHub"}
+            </Text>
+            {isGithubClicked ? (
+              <ActivityIndicator size="small" color={isDarkMode ? "#e7ecfb" : "#1f2937"} />
+            ) : (
+              <Ionicons name="chevron-forward" size={16} color={isDarkMode ? "#9ea7bd" : "#64748b"} />
+            )}
+          </Pressable>
+
+          <Pressable
+            onPress={() => handleSocialAuth(OAUTH.OAUTH_APPLE)}
+            disabled={isLoadingAny}
+            className="mt-3 h-12 flex-row items-center rounded-[14px] border border-[#d7ddea] bg-[#f7f9fc] px-4"
+          >
+            <View className="h-7 w-7 items-center justify-center rounded-full bg-[#0f1116]">
+              <FontAwesome name="apple" size={16} color="#ffffff" />
+            </View>
+            <Text className="ml-3 flex-1 text-[15px] font-semibold text-[#161a23]">
+              {isAppleClicked ? "Connecting with Apple..." : "Continue with Apple"}
+            </Text>
+            {isAppleClicked ? (
+              <ActivityIndicator size="small" color="#1f2937" />
+            ) : (
+              <Ionicons name="chevron-forward" size={16} color="#8a93a6" />
+            )}
+          </Pressable>
+
+          <Text className={`mt-4 text-center text-[11px] ${isDarkMode ? "text-[#8f97ab]" : "text-[#8a93a6]"}`}>
+            By continuing, you agree to our Terms and Privacy Policy.
+          </Text>
+        </View>
       </View>
 
     </SafeAreaView>
