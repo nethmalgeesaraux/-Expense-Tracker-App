@@ -2,13 +2,11 @@ import SafeAreaView from "@/components/SafeAreaView";
 import { useColorScheme } from "nativewind";
 import { Image, Text, View } from "react-native";
 import { Pressable } from "react-native";
-import { useState } from "react";
 import useSocialAuth from "@/hooks/useSocialAuth";
 
 const SignInScreen = () => {
   const { colorScheme } = useColorScheme();
   const isDarkMode = colorScheme === "dark";
-  const{loding,setLoding}=useState(false);
   const { handleSocialAuth, loadingStrategy } = useSocialAuth();
 
 
