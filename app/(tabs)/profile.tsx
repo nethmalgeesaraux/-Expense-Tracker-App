@@ -1,16 +1,22 @@
 import SafeAreaView from "@/components/SafeAreaView";
 import { Feather } from "@expo/vector-icons";
-import { useClerk } from "@clerk/expo";
+import { useClerk, useUser } from "@clerk/expo";
 import { useRouter } from "expo-router";
 import { useColorScheme } from "nativewind";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 
 const ProfileScreen = () => {
   const { signOut } = useClerk();
+  const { user } = useUser();
   const router = useRouter();
   const { colorScheme } = useColorScheme();
   const isDarkMode = colorScheme === "dark";
+  const displayName =
+    user?.fullName || user?.firstName || user?.username || "Your Name";
+  const displayEmail = user?.primaryEmailAddress?.emailAddress || "No email yet";
+  const profileImageUrl = user?.imageUrl;
+  const fallbackLetter = displayName.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
     await signOut();
@@ -29,7 +35,30 @@ const ProfileScreen = () => {
         </Text>
 
         <View className="mt-8 rounded-2xl border border-[#d5dbea] bg-white p-5 dark:border-[#2d3344] dark:bg-[#171d2a]">
-          <Text className="text-[15px] text-[#4b5563] dark:text-[#d1d5db]">
+          <View className="flex-row items-center">
+            {profileImageUrl ? (
+              <Image
+                source={{ uri: profileImageUrl }}
+                className="h-16 w-16 rounded-full"
+              />
+            ) : (
+              <View className="h-16 w-16 items-center justify-center rounded-full bg-[#dbe4ff] dark:bg-[#2a3552]">
+                <Text className="text-[20px] font-bold text-[#1e3a8a] dark:text-[#bfdbfe]">
+                  {fallbackLetter}
+                </Text>
+              </View>
+            )}
+            <View className="ml-4 flex-1">
+              <Text className="text-[17px] font-bold text-[#111827] dark:text-[#f9fafb]">
+                {displayName}
+              </Text>
+              <Text className="mt-1 text-[13px] text-[#6b7280] dark:text-[#9ca3af]">
+                {displayEmail}
+              </Text>
+            </View>
+          </View>
+
+          <Text className="mt-4 text-[15px] text-[#4b5563] dark:text-[#d1d5db]">
             Manage your account settings from here.
           </Text>
 
