@@ -1,13 +1,11 @@
-//db 
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
+import * as schema from "./schemas";
 
 const databaseUrl = process.env.DATABASE_URL;
 
-const schema = {};
-
 if (!databaseUrl) {
-    throw new Error("DATABASE_URL is required for API routes");
+  throw new Error("DATABASE_URL is required for API routes");
 }
 
 const sql = neon(databaseUrl);
