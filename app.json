@@ -23,7 +23,7 @@
       "package": "com.nethmalgeesara.MoneyMap"
     },
     "web": {
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [

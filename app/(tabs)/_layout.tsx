@@ -1,9 +1,12 @@
 import { useAuth } from "@clerk/expo";
 import { Redirect, Tabs } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useColorScheme } from "nativewind";
 
 export default function TabsLayout() {
   const { isLoaded, isSignedIn } = useAuth();
+  const { colorScheme } = useColorScheme();
+  const isDarkMode = colorScheme === "dark";
 
   if (!isLoaded) {
     return null;
@@ -17,7 +20,12 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#1f2937",
+        tabBarActiveTintColor: isDarkMode ? "#e5e7eb" : "#1f2937",
+        tabBarInactiveTintColor: isDarkMode ? "#9ca3af" : "#6b7280",
+        tabBarStyle: {
+          backgroundColor: isDarkMode ? "#11131b" : "#ffffff",
+          borderTopColor: isDarkMode ? "#26283a" : "#e5e7eb",
+        },
       }}
       initialRouteName="home"
     >
@@ -60,4 +68,3 @@ export default function TabsLayout() {
     </Tabs>
   );
 }
-
