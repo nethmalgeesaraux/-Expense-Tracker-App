@@ -10,7 +10,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "db:push": "drizzle-kit push",
-    "seed:expense": "node ./scripts/seed.expense.cjs"
+    "seed:expense": "node ./scripts/seed.expense.mjs"
 
   },
   "dependencies": {
